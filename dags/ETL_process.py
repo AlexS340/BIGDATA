@@ -27,7 +27,7 @@ with DAG(
 ) as dag:
 
     @task
-    def insert_tables_raw_to_dds(**kwargs):
+    def insert_tables_raw_to_ods(**kwargs):
         params = kwargs['params']
         print(f"ALL PARAMS: {params}")
         
@@ -41,7 +41,7 @@ with DAG(
                 upload_table(table_name=table_name, dfr=df)
 
     @task
-    def insert_tables_dds_to_ods(**kwargs):
+    def insert_tables_ods_to_dds(**kwargs):
         params = kwargs['params']
         table_names = get_table_names()
         if "ods_movies_meta" not in table_names:
@@ -73,7 +73,7 @@ with DAG(
             print("ODS already fit")
     
     @task
-    def process_ods_to_pdm(**kwargs):
+    def process_dds_to_pdm(**kwargs):
         params = kwargs['params']
         df = get_table("ods_movies_meta")
 
@@ -161,4 +161,4 @@ with DAG(
 
         new_im.save(os.path.join(path_to_folder, 'RESULT.jpg'))
 
-    insert_tables_raw_to_dds() >> insert_tables_dds_to_ods() >> process_ods_to_pdm() >> [thesis_1(), thesis_2(), thesis_3()] >> collector()
+    insert_tables_raw_to_ods() >> insert_tables_ods_to_dds() >> process_dds_to_pdm() >> [thesis_1(), thesis_2(), thesis_3()] >> collector()
