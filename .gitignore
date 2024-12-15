@@ -1,0 +1,10 @@
+.env
+.idea
+.ipynb_checkpoints
+data/*
+logs/*
+plugins
+*.ipynb
+pgadmin/
+dags/__pycache__
+dags/scripts/__pycache__
